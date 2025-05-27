@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": " tailwindcss -i ./src/input.css -o ./dist/styles/output.css --watch"
+    "start": "node api.js &&  tailwindcss -i ./src/input.css -o ./dist/styles/output.css --watch"
   },
   "devDependencies": {
     "prettier": "^3.1.0",
