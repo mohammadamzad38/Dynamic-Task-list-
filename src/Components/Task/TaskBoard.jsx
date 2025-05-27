@@ -19,6 +19,7 @@ export default function () {
   const [tasks, settasks] = useState([defaultTask]);
   const [showModal, setShowModal] = useState(false);
   const [taskUpdate, setTaskUpdate] = useState(null);
+  const [favorite, setFavorite] = useState(false);
 
   function handleAddtask(newTask, isAdd) {
     if (isAdd) {
@@ -52,10 +53,28 @@ export default function () {
     settasks(taskAfterDelete);
   }
 
-   function handleAllDelete() {
-      tasks.length = 0;
-      settasks([...tasks]);
-    }
+  function handleAllDelete() {
+    tasks.length = 0;
+    settasks([...tasks]);
+  }
+
+  function handleFavorite(taskId) {
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    const newTask = [...tasks];
+    newTask[taskIndex].isFavorite = !newTask[taskIndex].isFavorite;
+
+    settasks(newTask);
+  }
+
+  function handleSearch(searchTerm) {
+    const filterd = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+	settasks([...filterd])
+  }
+
+
   return (
     <section className="mb-20" id="tasks">
       {showModal && (
@@ -67,7 +86,7 @@ export default function () {
       )}
       <div className="container">
         <div className="p-2 flex justify-end">
-          <Search />
+          <Search onSearch={handleSearch} />
         </div>
 
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
@@ -79,6 +98,7 @@ export default function () {
             tasks={tasks}
             onEdit={handleEditTask}
             onDelete={handleDeleteTask}
+            onFavorite={handleFavorite}
           />
         </div>
       </div>
