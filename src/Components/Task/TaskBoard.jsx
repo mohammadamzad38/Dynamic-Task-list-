@@ -4,6 +4,7 @@ import Actions from "./Actions";
 import Search from "./Search";
 import TaskList from "./TaskList";
 import TaskModal from "./TaskModal";
+import Notask from "./Notask";
 
 export default function () {
   const defaultTask = {
@@ -94,12 +95,12 @@ export default function () {
             onDeleteAllCLick={handleAllDelete}
             onAddClick={() => setShowModal(true)}
           />
-          <TaskList
+          {tasks.length > 0 ?( <TaskList
             tasks={tasks}
             onEdit={handleEditTask}
             onDelete={handleDeleteTask}
             onFavorite={handleFavorite}
-          />
+          />) : <Notask />}
         </div>
       </div>
     </section>
